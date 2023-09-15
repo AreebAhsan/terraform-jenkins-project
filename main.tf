@@ -113,7 +113,7 @@ EOF
 resource "aws_instance" "two" {
   ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
-  subnet_id     = aws_subnet.public_subnet[1].id
+  subnet_id     = aws_subnet.public_subnet[0].id
   key_name        = "ALKeyPair"
   vpc_security_group_ids = [aws_security_group.five.id]
   availability_zone = "ap-south-1b"
@@ -145,7 +145,7 @@ resource "aws_instance" "three" {
 resource "aws_instance" "four" {
   ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
-  subnet_id     = aws_subnet.private_subnet[1].id
+  subnet_id     = aws_subnet.private_subnet[0].id
   key_name        = "ALKeyPair"
   vpc_security_group_ids = [aws_security_group.five.id]
   availability_zone = "ap-south-1b"
