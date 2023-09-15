@@ -28,7 +28,7 @@ resource "aws_elb" "bar" {
  resource "aws_rds_cluster" "default" {
   cluster_identifier      = "aurora-cluster-demo"
   engine                  = "aurora-mysql"
-  engine_version          = "5.7.mysql_aurora.3.02.0"
+  engine_version          = "5.7.mysql_aurora.2.11.2"
   availability_zones      = ["ap-south-1a", "ap-south-1b"]
   database_name           = "mydb"
   master_username         = "areeb"
@@ -43,7 +43,6 @@ resource "aws_instance" "nine" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public_subnet[0].id
   key_name = "ALKeyPair"
-  vpc_security_group_ids = [aws_security_group.five.id]
   availability_zone = "ap-south-1a"
   tags = {
     Name = "instance-${each.key}"
