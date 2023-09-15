@@ -89,9 +89,6 @@ resource "aws_route_table_association" "private_subnet_association" {
 }
 
 #this file consists of code for instances and sg
-provider "aws" {
-region = "ap-south-1"
-}
 
 resource "aws_instance" "one" {
   ami             = "ami-0899663faf239dd8a"
