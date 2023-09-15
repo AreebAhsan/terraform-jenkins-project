@@ -90,16 +90,16 @@ resource "aws_route_table_association" "private_subnet_association" {
 
 #this file consists of code for instances and sg
 provider "aws" {
-region = "ap-southeast-1"
+region = "ap-south-1"
 }
 
 resource "aws_instance" "one" {
-  ami             = "ami-0b825ad86ddcfb907"
+  ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
   subnet_id     = aws_subnet.public_subnet[0].id
-  key_name        = "singaporekey"
+  key_name        = "ALKeyPair"
   vpc_security_group_ids = [aws_security_group.five.id]
-  availability_zone = "ap-southeast-1a"
+  availability_zone = "ap-south-1a"
   user_data       = <<EOF
 #!/bin/bash
 sudo -i
@@ -114,12 +114,12 @@ EOF
 }
 
 resource "aws_instance" "two" {
-  ami             = "ami-0b825ad86ddcfb907"
+  ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
   subnet_id     = aws_subnet.public_subnet[1].id
-  key_name        = "singaporekey"
+  key_name        = "ALKeyPair"
   vpc_security_group_ids = [aws_security_group.five.id]
-  availability_zone = "ap-southeast-1b"
+  availability_zone = "ap-south-1b"
   user_data       = <<EOF
 #!/bin/bash
 sudo -i
@@ -134,31 +134,31 @@ EOF
 }
 
 resource "aws_instance" "three" {
-  ami             = "ami-0b825ad86ddcfb907"
+  ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
   subnet_id     = aws_subnet.private_subnet[0].id
-  key_name        = "singaporekey"
+  key_name        = "ALKeyPair"
   vpc_security_group_ids = [aws_security_group.five.id]
-  availability_zone = "ap-southeast-1a"
+  availability_zone = "ap-south-1a"
   tags = {
     Name = "app-server-1"
   }
 }
 
 resource "aws_instance" "four" {
-  ami             = "ami-0b825ad86ddcfb907"
+  ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
   subnet_id     = aws_subnet.private_subnet[1].id
-  key_name        = "singaporekey"
+  key_name        = "ALKeyPair"
   vpc_security_group_ids = [aws_security_group.five.id]
-  availability_zone = "ap-southeast-1b"
+  availability_zone = "ap-south-1b"
   tags = {
     Name = "app-server-2"
   }
 }
 
 resource "aws_security_group" "five" {
-  name = "elb-sg"
+  name = "terra-sg"
   ingress {
     from_port   = 22
     to_port     = 22
@@ -197,7 +197,7 @@ default = ["user1", "user2", "user3", "user4"]
 }
 
 resource "aws_ebs_volume" "eight" {
- availability_zone = "ap-southeast-1a"
+ availability_zone = "ap-south-1a"
   size = 20
   tags = {
     Name = "terra-ebs"
