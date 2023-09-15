@@ -37,7 +37,7 @@ resource "aws_elb" "bar" {
   preferred_backup_window = "07:00-09:00"
 }
 
-resource "aws_instance" "one" {
+resource "aws_instance" "nine" {
   for_each = toset(["one", "two", "three"])
   ami           = "ami-0899663faf239dd8a"
   instance_type = "t2.micro"
