@@ -93,9 +93,8 @@ resource "aws_route_table_association" "private_subnet_association" {
 resource "aws_instance" "one" {
   ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
-  subnet_id = "${aws_subnet.public_subnet.id}"
+  subnet_id = "${aws_subnet.public_subnet[0].id}"
   key_name        = "ALKeyPair"
-  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1a"
   user_data       = <<EOF
 #!/bin/bash
@@ -113,9 +112,8 @@ EOF
 resource "aws_instance" "two" {
   ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
-  subnet_id = "${aws_subnet.public_subnet.id}"
+  subnet_id = "${aws_subnet.public_subnet[1].id}"
   key_name        = "ALKeyPair"
-  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1b"
   user_data       = <<EOF
 #!/bin/bash
@@ -133,9 +131,8 @@ EOF
 resource "aws_instance" "three" {
   ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
-  subnet_id = "${aws_subnet.public_subnet.id}"
+  subnet_id = "${aws_subnet.private_subnet[0].id}"
   key_name        = "ALKeyPair"
-  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1a"
   tags = {
     Name = "app-server-1"
@@ -145,9 +142,8 @@ resource "aws_instance" "three" {
 resource "aws_instance" "four" {
   ami             = "ami-0899663faf239dd8a"
   instance_type   = "t2.micro"
-  subnet_id = "${aws_subnet.public_subnet.id}"
+  subnet_id = "${aws_subnet.private_subnet[1].id}"
   key_name        = "ALKeyPair"
-  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1b"
   tags = {
     Name = "app-server-2"
@@ -165,7 +161,7 @@ resource "aws_security_group" "five" {
 
   ingress {
     from_port   = 80
-    to_port     = 80
+    to_port     = 80:
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
