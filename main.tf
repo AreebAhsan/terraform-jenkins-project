@@ -91,10 +91,11 @@ resource "aws_route_table_association" "private_subnet_association" {
 #this file consists of code for instances and sg
 
 resource "aws_instance" "one" {
-  ami             = "ami-0899663faf239dd8a"
+  ami             = "ami-0ff30663ed13c2290"
   instance_type   = "t2.micro"
   subnet_id = "${aws_subnet.public_subnet[0].id}"
   key_name        = "ALKeyPair"
+  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1a"
   user_data       = <<EOF
 #!/bin/bash
@@ -110,10 +111,11 @@ EOF
 }
 
 resource "aws_instance" "two" {
-  ami             = "ami-0899663faf239dd8a"
+  ami             = "ami-0ff30663ed13c2290"
   instance_type   = "t2.micro"
   subnet_id = "${aws_subnet.public_subnet[1].id}"
   key_name        = "ALKeyPair"
+  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1b"
   user_data       = <<EOF
 #!/bin/bash
@@ -129,10 +131,11 @@ EOF
 }
 
 resource "aws_instance" "three" {
-  ami             = "ami-0899663faf239dd8a"
+  ami             = "ami-0ff30663ed13c2290"
   instance_type   = "t2.micro"
   subnet_id = "${aws_subnet.private_subnet[0].id}"
   key_name        = "ALKeyPair"
+  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1a"
   tags = {
     Name = "app-server-1"
@@ -140,10 +143,11 @@ resource "aws_instance" "three" {
 }
 
 resource "aws_instance" "four" {
-  ami             = "ami-0899663faf239dd8a"
+  ami             = "ami-0ff30663ed13c2290"
   instance_type   = "t2.micro"
   subnet_id = "${aws_subnet.private_subnet[1].id}"
   key_name        = "ALKeyPair"
+  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1b"
   tags = {
     Name = "app-server-2"
@@ -152,6 +156,7 @@ resource "aws_instance" "four" {
 
 resource "aws_security_group" "five" {
   name = "terra-sg"
+  vpc_id = aws_vpc.my_vpc.id
   ingress {
     from_port   = 22
     to_port     = 22
