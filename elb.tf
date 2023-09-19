@@ -43,6 +43,7 @@ resource "aws_instance" "nine" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public_subnet[0].id
   key_name = "ALKeyPair"
+  vpc_security_group_ids = ["${aws_security_group.five.id}"]
   availability_zone = "ap-south-1a"
   tags = {
     Name = "instance-${each.key}"
