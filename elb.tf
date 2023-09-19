@@ -1,6 +1,7 @@
 resource "aws_elb" "bar" {
   name               = "areeb-terraform-elb"
   availability_zones = ["ap-south-1a", "ap-south-1b"]
+  vpc_security_group_ids = ["${aws_security_group.five.id}"]
 
   listener {
     instance_port     = 80
